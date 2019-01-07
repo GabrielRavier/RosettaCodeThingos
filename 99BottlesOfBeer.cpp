@@ -97,7 +97,53 @@ template<> inline void BottlesOfBeer<1>()
     std::cout << " bottle of beer";
 }
 
+template<int I> inline void BottlesOfBeerOnTheWall()
+{
+    BottlesOfBeer<I>();
+    std::cout << " on the wall";
+}
+
+template<int I> inline void stanza()
+{
+    BottlesOfBeerOnTheWall<I>();
+    std::cout << ",\n";
+    BottlesOfBeer<I>();
+    std::cout << ",\n";
+}
+
+template<int I> inline void bridge()
+{
+    std::cout << "Take one down, pass it around,\n";
+    BottlesOfBeerOnTheWall<I - 1>();
+    std::cout << ",\n";
+}
+
+template<> inline void bridge<0>()
+{
+    std::cout << "Go to the store and buy some more,\n";
+    BottlesOfBeerOnTheWall<99>(); 
+}
+
+template<int I> inline void verse()
+{
+    stanza<I>();
+    bridge<I>();
+}
+
+template<int I> inline void sing()
+{
+    verse<I>();
+    std::cout << '\n';
+    sing<I - 1>();
+}
+
+template<> inline void sing<0>()
+{
+    verse<0>();
+}
+
 int main()
 {
+    sing<99>();
     return 0;
 }
